@@ -25,11 +25,7 @@ Route::group(['prefix'=>'login','middleware' =>['webendpoints']],function(){
 	Route::post('control/obtMenus','Login\LoginController@obtMenus');
 });
 
-/*
-Route::get('/foo', function () {
-    return array('esto es un prueba ','de laravel');
-}); 
-*/
+
 /**
  * Rutas para los Catálogos
  */
@@ -220,6 +216,7 @@ Route::group(['prefix' => 'mesaControl', 'middleware' => ['webendpoints']], func
 	Route::post('seguimiento/tecnicoFolio/RefaccionesSave', 'Sistema\MesaControlController@insDetalleRefaccionesTecnico');
 	Route::post('seguimiento/tecnicoFolio/RefaccionesDel', 'Sistema\MesaControlController@eliRefaServsFolioTecnico');
 	Route::post('seguimiento/tecnicoFolio/edoCuenta','Sistema\MesaControlController@obtEdoCuenta');
+	Route::post('seguimiento/tecnicoFolio/totalesEdo','Sistema\MesaControlController@totalesEdo');
 	Route::post('seguimiento/sucursalFolio/detalle', 'Sistema\MesaControlController@obtDetalleSucursal');
 	Route::post('seguimiento/documentos/download', 'Sistema\MesaControlController@downDocumentoFolio');
 	Route::post('seguimiento/documentos/downloadValidar', 'Sistema\MesaControlController@validarDocumentoFolio');
@@ -260,6 +257,8 @@ Route::group(['prefix' => 'operaciones', 'middleware' => ['webendpoints']], func
 	//Route::post('misTecnicos/estadoCuenta', 'Sistema\OperacionesController@obtEstadoCuentaTecnico');
 	Route::post('advertencias/acta', 'Sistema\OperacionesController@obtAdvertenciasActa');
 	Route::post('misTecnicos/estadoCuenta','Sistema\OperacionesController@obtEstadosCuenta');
+	Route::post('misTecnicos/totalesEdo','Sistema\OperacionesController@totalesEdo');
+
 	// Armado de Actas
 	Route::post('armadoActas/all', 'Sistema\OperacionesController@obtActas');
 	Route::post('armadoActas/enviar', 'Sistema\OperacionesController@enviarActas');
@@ -351,6 +350,12 @@ Route::group(['prefix' => 'gastos', 'middleware' => ['webendpoints']], function 
 	Route::post('seguimiento/motivoGasto/save', 'Sistema\GastosController@saveMotivoEstatus');
 	// Reportar Gasto
 	Route::post('seguimiento/reportarGasto/save', 'Sistema\GastosController@saveReportarGasto');
+	Route::post('seguimiento/obteneDatos/obt', 'Sistema\GastosController@obtDatosReportar');
+	Route::post('seguimiento/obtRespuesta/respuesta', 'Sistema\GastosController@respuestaGasto');
+	Route::post('seguimiento/obtCancelar/obt', 'Sistema\GastosController@obtGastosCancelar');
+	Route::post('seguimiento/resCancelar/res', 'Sistema\GastosController@repGastoCancelado');
+
+
 	
 });
 

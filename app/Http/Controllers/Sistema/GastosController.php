@@ -682,7 +682,90 @@ class GastosController extends Controller
 			// Ejecutar SP Base de datos
 			$responseSP = DB::select("CALL psm.".$nombre_sp."(?, ?);", [ $arrayParametros[0], $arrayParametros[1] ]);
 			
-			return $this->formatearRespuesta($responseSP, 200);
+			return $this->formatearRespuesta($responseSP, 200,1);
+		} catch (\Throwable $th) {
+			throw $th;
+			return $this->formatearRespuesta([], 500, 2, 0, "Error al procesar la solicitud");
+		}
+	}
+
+	public function obtDatosReportar(Request $request)
+	{
+		try {
+			$nombre_sp='GAS_obtDatosReportar';
+			$arrayParametros = array();
+				
+			//Obtener parametros del request
+			$arrayParametros[0] = $request->has("idGasto") ? $request-> input("idGasto") : 0;
+			$arrayParametros[1] = $request->has("idUsuario") ? $request-> input("idUsuario") : 0;
+			$responseSP = DB::select("CALL psm.".$nombre_sp."(?, ?);", [ $arrayParametros[0], $arrayParametros[1] ]);
+			return $this->formatearRespuesta($responseSP, 200,1);
+		} catch (\Throwable $th) {
+			throw $th;
+			return $this->formatearRespuesta([], 500, 2, 0, "Error al procesar la solicitud");
+		}
+	}
+
+	public function respuestaGasto(Request $request)
+	{
+		try {
+			$nombre_sp='GAS_repGasto';
+			$arrayParametros = array();
+
+			//Obtener parametros del request
+			$arrayParametros[0] = $request->has("idGasto") ? $request-> input("idGasto") : 0;
+			$arrayParametros[1] = $request->has("idFolio") ? $request-> input("idFolio") : 0;
+			$arrayParametros[2] = $request->has("idCliente") ? $request-> input("idCliente") : 0;
+			$arrayParametros[3] = $request->has("idSucursal") ? $request-> input("idSucursal") : 0;
+			$arrayParametros[4] = $request->has("folio") ? $request-> input("folio") : 0;
+			$arrayParametros[5] = $request->has("tipoGasto") ? $request-> input("tipoGasto") : 0;
+			$arrayParametros[6] = $request->has("folioGasto") ? $request-> input("folioGasto") : 0;
+			$arrayParametros[7] = $request->has("codigoAlmacen") ? $request-> input("codigoAlmacen") : 0;
+			$responseSP = DB::select("CALL psm.".$nombre_sp."(?, ?, ?, ?, ?, ?, ?,?);", [ $arrayParametros[0], $arrayParametros[1],$arrayParametros[2],$arrayParametros[3],$arrayParametros[4],$arrayParametros[5],$arrayParametros[6],$arrayParametros[7] ]);
+			return $this->formatearRespuesta($responseSP,200,1);
+			
+		} catch (\Throwable $th) {
+			throw $th;
+			return $this->formatearRespuesta([], 500, 2, 0, "Error al procesar la solicitud");
+		}
+	}
+	/*
+	 *Obtener gasto a cancelar
+	*/
+	public function obtGastosCancelar(Request $request)
+	{
+		try {
+			$nombre_sp='GAS_obtDatosCancelar';
+			$arrayParametros = array();
+				
+			//Obtener parametros del request
+			$arrayParametros[0] = $request->has("idGasto") ? $request-> input("idGasto") : 0;
+			$arrayParametros[1] = $request->has("idUsuario") ? $request-> input("idUsuario") : 0;
+			$responseSP = DB::select("CALL psm.".$nombre_sp."(?, ?);", [ $arrayParametros[0], $arrayParametros[1] ]);
+			return $this->formatearRespuesta($responseSP, 200,1);
+		} catch (\Throwable $th) {
+			throw $th;
+			return $this->formatearRespuesta([], 500, 2, 0, "Error al procesar la solicitud");
+		}
+	}
+
+	public function repGastoCancelado(Request $request)
+	{
+		try {
+			$nombre_sp='GAS_canGasto';
+			$arrayParametros = array();
+
+			//Obtener parametros del request
+			$arrayParametros[0] = $request->has("idGasto") ? $request-> input("idGasto") : 0;
+			$arrayParametros[1] = $request->has("idFolio") ? $request-> input("idFolio") : 0;
+			$arrayParametros[2] = $request->has("idCliente") ? $request-> input("idCliente") : 0;
+			$arrayParametros[3] = $request->has("idSucursal") ? $request-> input("idSucursal") : 0;
+			$arrayParametros[4] = $request->has("folio") ? $request-> input("folio") : 0;
+			$arrayParametros[5] = $request->has("tipoGasto") ? $request-> input("tipoGasto") : 0;
+			$arrayParametros[6] = $request->has("folioGasto") ? $request-> input("folioGasto") : 0;
+			$arrayParametros[7] = $request->has("codigoAlmacen") ? $request-> input("codigoAlmacen") : 0;
+			$responseSP = DB::select("CALL psm.".$nombre_sp."(?, ?, ?, ?, ?, ?, ?,?);", [ $arrayParametros[0], $arrayParametros[1],$arrayParametros[2],$arrayParametros[3],$arrayParametros[4],$arrayParametros[5],$arrayParametros[6],$arrayParametros[7] ]);
+			return $this->formatearRespuesta($responseSP,200,1);
 		} catch (\Throwable $th) {
 			throw $th;
 			return $this->formatearRespuesta([], 500, 2, 0, "Error al procesar la solicitud");

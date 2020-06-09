@@ -304,9 +304,10 @@ class OperacionesController extends Controller
 	public function obtEstadosCuenta(Request $request)
 	{
 		try{
+			//TEC_obtEdoCuentaTecnico 
 			$nombre_sp ='TEC_obtEdoCuentaTecnico';
 			$arrayParametros = array();
-			$arrayParametros[0] = $request->has("id") ? $request->input("id") : 0; // id Empleado
+			$arrayParametros[0] = $request->has("idEdoCuenta") ? $request->input("idEdoCuenta") : 0; 
 			// Ejecutar SP Base de datos
 			$responseSP = DB::select("CALL ".$nombre_sp."(?);", [$arrayParametros[0]]);
 			return $this->formatearRespuesta($responseSP, 200, 1);
@@ -317,6 +318,24 @@ class OperacionesController extends Controller
 			return $this->formatearRespuesta([], 500, 2, 0,"Error al procesar la solicitud");
 		}
 	}
+
+	public function totalesEdo(Request $request)
+	{
+		try{
+			$nombre_sp ='TEC_obtTotalesEdoCuentaTecnico';
+			$arrayParametros = array();
+			$arrayParametros[0] = $request->has("idEdoCuenta") ? $request->input("idEdoCuenta") : 0; 
+			// Ejecutar SP Base de datos
+			$responseSP = DB::select("CALL ".$nombre_sp."(?);", [$arrayParametros[0]]);
+			return $this->formatearRespuesta($responseSP, 200, 1);
+
+		}catch(\Throwable $th){
+			throw $th;
+			return $this->formatearRespuesta([], 500, 2, 0,"Error al procesar la solicitud");
+		}
+		
+	}
+
 
 	/**
 	 * Enviar actas desde el Armado de Actas (Operaciones)
